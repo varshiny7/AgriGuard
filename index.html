@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriGuard — Secure AI Agricultural Advisor</title>
+    <meta name="description" content="AgriGuard is a secure multi-agent AI system for intelligent crop management, soil optimization, and agricultural advisory.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- Animated Background -->
+    <div class="bg-wrap">
+        <div class="bg-img"></div>
+        <div class="bg-tint"></div>
+        <!-- Floating Orbs -->
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="page">
+
+        <!-- ── HERO HEADER ── -->
+        <header class="hero">
+            <div class="hero-logo">
+                <div class="logo-icon">🌿</div>
+                <div class="logo-text">
+                    <h1>Agri<span>Guard</span></h1>
+                    <p>Secure Multi-Agent Agricultural Advisor</p>
+                </div>
+            </div>
+            <div class="hero-pills">
+                <span class="pill pill-green">🤖 AI Agents</span>
+                <span class="pill pill-teal">🛡️ Privacy Protected</span>
+                <span class="pill pill-lime">📊 Data Science</span>
+            </div>
+        </header>
+
+        <!-- ── STAT STRIP ── -->
+        <div class="stat-strip">
+    <div class="stat">
+        <span class="stat-n" data-target="15">0</span>
+        <span class="stat-label">Supported Crops</span>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat">
+        <span class="stat-n" data-target="100">0</span>
+        <span class="stat-label">Personal Info Secured</span>
+    </div>
+</div>
+
+        <!-- ── MAIN GRID ── -->
+        <main class="main-grid">
+
+            <!-- LEFT: Form Panel -->
+            <section class="panel panel-form">
+                <div class="panel-head">
+                    <div class="panel-icon">🌾</div>
+                    <div>
+                        <h2>Field Diagnosis</h2>
+                        <p>Enter your crop and soil details below</p>
+                    </div>
+                </div>
+
+                <form id="agri-form" autocomplete="off">
+
+                    <!-- User Info - anonymized -->
+                    <div class="field-group">
+                        <label for="user_query">
+                            <span>Farmer Details / Location</span>
+                            <span class="badge-anon">🔒 Auto-anonymized</span>
+                        </label>
+                        <textarea id="user_query" rows="2"
+                            placeholder="Name, coordinates (28.61°N 77.20°E), contact, notes..."></textarea>
+                    </div>
+
+                    <!-- Crop & Region Row -->
+                    <div class="two-col">
+                        <div class="field-group">
+                            <label for="crop_name">Target Crop</label>
+                            <select id="crop_name">
+                                <option value="Rice" selected>🌾 Rice</option>
+                                <option value="Wheat">🌿 Wheat</option>
+                                <option value="Maize">🌽 Maize</option>
+                                <option value="Tomato">🍅 Tomato</option>
+                                <option value="Potato">🥔 Potato</option>
+                                <option value="Soybeans">🫘 Soybeans</option>
+                            </select>
+                        </div>
+                        <div class="field-group">
+                            <label for="region_id">Agricultural Zone</label>
+                            <select id="region_id">
+                                <option value="">📍 Auto-Detect</option>
+                                <option value="ZONE_NORTH">North — Dry Plains</option>
+                                <option value="ZONE_SOUTH">South — Wetlands</option>
+                                <option value="ZONE_VALLEY">Valley — Temperate</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- NPK + pH -->
+                    <div class="section-label">
+                        <span>Soil Nutrient Readings (PPM)</span>
+                    </div>
+
+                    <!-- Visual NPK Sliders -->
+                    <div class="npk-sliders">
+                        <div class="npk-item npk-n">
+                            <div class="npk-top">
+                                <span class="npk-label">N — Nitrogen</span>
+                                <span class="npk-val" id="n-val">35</span>
+                            </div>
+                            <input type="range" id="current_n" min="0" max="200" value="35" class="slider slider-n">
+                            <div class="npk-hint">Target for Rice: ~100</div>
+                        </div>
+                        <div class="npk-item npk-p">
+                            <div class="npk-top">
+                                <span class="npk-label">P — Phosphorus</span>
+                                <span class="npk-val" id="p-val">15</span>
+                            </div>
+                            <input type="range" id="current_p" min="0" max="150" value="15" class="slider slider-p">
+                            <div class="npk-hint">Target for Rice: ~50</div>
+                        </div>
+                        <div class="npk-item npk-k">
+                            <div class="npk-top">
+                                <span class="npk-label">K — Potassium</span>
+                                <span class="npk-val" id="k-val">20</span>
+                            </div>
+                            <input type="range" id="current_k" min="0" max="200" value="20" class="slider slider-k">
+                            <div class="npk-hint">Target for Rice: ~50</div>
+                        </div>
+                    </div>
+
+                    <!-- pH -->
+                    <div class="field-group ph-group">
+                        <label for="current_ph">
+                            <span>Soil pH Level</span>
+                            <span class="ph-badge" id="ph-badge">Slightly Acidic</span>
+                        </label>
+                        <div class="ph-row">
+                            <span class="ph-extreme">0 Acid</span>
+                            <input type="range" id="current_ph" min="0" max="14" step="0.1" value="6.2" class="slider slider-ph">
+                            <span class="ph-extreme">14 Base</span>
+                        </div>
+                        <div class="ph-display" id="ph-display">pH = 6.2</div>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" id="submit-btn" class="submit-btn">
+                        <span class="btn-text">🔬 Analyze & Generate Advisory</span>
+                        <div class="btn-glow"></div>
+                    </button>
+                </form>
+            </section>
+
+            <!-- RIGHT: Results Panel -->
+            <section class="panel panel-results" id="results-panel">
+
+                <!-- Empty state -->
+                <div class="empty-state" id="empty-state">
+                    <div class="empty-icon">
+                        <div class="pulse-ring"></div>
+                        <span>🌱</span>
+                    </div>
+                    <h3>Awaiting Field Data</h3>
+                    <p>Fill in your soil readings and click <strong>Analyze</strong> to consult our secure AI agent network.</p>
+                    <div class="feature-list">
+                        <div class="feat"><span>🤖</span> Multi-Agent Agronomist + Compliance Loop</div>
+                        <div class="feat"><span>🧮</span> Linear Programming Fertilizer Optimizer</div>
+                        <div class="feat"><span>💧</span> Evapotranspiration Irrigation Scheduler</div>
+                        <div class="feat"><span>🔑</span> HMAC-Signed Tamper-proof Advisories</div>
+                    </div>
+                </div>
+
+                <!-- Loading state -->
+                <div class="loading-state hidden" id="loading-state">
+                    <div class="loader-ring"></div>
+                    <h3>Consulting AI Agents...</h3>
+                    <div class="agent-steps" id="agent-steps">
+                        <div class="agent-step done" id="step-anon">🛡️ Anonymizing PII...</div>
+                        <div class="agent-step" id="step-mcp">🔍 Querying MCP Database...</div>
+                        <div class="agent-step" id="step-opt">🧮 Optimizing Fertilizer Mix...</div>
+                        <div class="agent-step" id="step-irr">💧 Calculating Irrigation...</div>
+                        <div class="agent-step" id="step-comp">✅ Eco-Compliance Check...</div>
+                        <div class="agent-step" id="step-sign">🔑 Signing Advisory...</div>
+                    </div>
+                </div>
+
+                <!-- Result content -->
+                <div class="result-content hidden" id="result-content">
+
+                    <!-- Security badges top bar -->
+                    <div class="security-bar">
+                        <div class="sec-badge sec-green">
+                            <span>🛡️</span>
+                            <div>
+                                <strong>PII Scrubbed</strong>
+                                <small id="pii-count-badge">0 items redacted</small>
+                            </div>
+                        </div>
+                        <div class="sec-badge sec-teal">
+                            <span>🔑</span>
+                            <div>
+                                <strong>HMAC Signed</strong>
+                                <small>Tamper-proof advisory</small>
+                            </div>
+                        </div>
+                        <div class="sec-badge sec-lime">
+                            <span>✅</span>
+                            <div>
+                                <strong>Eco-Compliant</strong>
+                                <small id="compliance-badge-text">Checked</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick KPI cards -->
+                    <div class="kpi-row">
+                        <div class="kpi">
+                            <div class="kpi-icon kpi-blue">🧪</div>
+                            <div class="kpi-body">
+                                <span class="kpi-label">Fertilizer Cost</span>
+                                <span class="kpi-val" id="kpi-cost">—</span>
+                            </div>
+                        </div>
+                        <div class="kpi">
+                            <div class="kpi-icon kpi-cyan">💧</div>
+                            <div class="kpi-body">
+                                <span class="kpi-label">Water (L/ha/day)</span>
+                                <span class="kpi-val" id="kpi-water">—</span>
+                            </div>
+                        </div>
+                        <div class="kpi">
+                            <div class="kpi-icon kpi-orange">🌍</div>
+                            <div class="kpi-body">
+                                <span class="kpi-label">Zone Resolved</span>
+                                <span class="kpi-val" id="kpi-zone">—</span>
+                            </div>
+                        </div>
+                        <div class="kpi">
+                            <div class="kpi-icon kpi-purple">🏆</div>
+                            <div class="kpi-body">
+                                <span class="kpi-label">Suitability</span>
+                                <span class="kpi-val" id="kpi-suit">—</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabs -->
+                    <div class="tabs">
+                        <button class="tab active" data-tab="advisory">📋 Advisory Report</button>
+                        <button class="tab" data-tab="charts">📊 Analytics Charts</button>
+                        <button class="tab" data-tab="security">🛡️ Security Log</button>
+                    </div>
+
+                    <!-- Tab: Advisory -->
+                    <div class="tab-pane active" id="tab-advisory">
+                        <div class="report-wrap">
+                            <pre id="report-text"></pre>
+                        </div>
+                        <div class="sig-row">
+                            <span>🔐 Trust Signature:</span>
+                            <code id="sig-hash"></code>
+                        </div>
+                    </div>
+
+                    <!-- Tab: Charts -->
+                    <div class="tab-pane" id="tab-charts">
+                        <div class="chart-grid">
+                            <div class="chart-card">
+                                <h4>🌿 Soil Nutrient Correction</h4>
+                                <canvas id="nutrientChart" height="200"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <h4>💧 Water Budget Forecast</h4>
+                                <canvas id="waterChart" height="200"></canvas>
+                            </div>
+                            <div class="chart-card chart-full">
+                                <h4>🧪 Recommended Fertilizer Mix</h4>
+                                <canvas id="fertChart" height="140"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab: Security -->
+                    <div class="tab-pane" id="tab-security">
+                        <div class="sec-section">
+                            <h4>🛡️ PII Sanitization Gateway</h4>
+                            <ul id="pii-list" class="pii-list"></ul>
+                        </div>
+                        <div class="sec-section">
+                            <h4>🔑 HMAC Advisory Certificate</h4>
+                            <div class="cert-box">
+                                <div class="cert-row"><span>Algorithm</span><code>HMAC-SHA256</code></div>
+                                <div class="cert-row"><span>Signature</span><code id="cert-sig" class="break-all"></code></div>
+                                <div class="cert-row"><span>Status</span><code class="cert-ok">✅ VERIFIED</code></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- ── FOOTER ── -->
+        <footer class="footer">
+            <p>AgriGuard Capstone — Agents for Good Track &nbsp;|&nbsp; Multi-Agent (ADK) · Custom MCP · Security Guardrails · Data Science Skills</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
